@@ -10,6 +10,7 @@ class Matrix
 
   def assign_value(position, value)
     @matrix[position[0].to_i][position[1].to_i] = value
+    array_2d_print
   end
 
   def check_three_in_line
@@ -30,6 +31,15 @@ class Matrix
       return true
     end
   end
+
+  def array_2d_print
+    @matrix.each do |arr|
+      arr.each do |item|
+        print "#{item} "
+      end
+      print "\n"
+    end
+  end
 end
 
 def user_choice
@@ -45,8 +55,7 @@ def user_choice
   [choice1, choice2]
 end
 
-def user_input(matrix)
-  array_2d_print(matrix)
+def user_input
   puts 'Enter x: '
   position_x = gets
   puts 'Enter y: '
@@ -56,14 +65,14 @@ end
 
 def game(winner, choice)
   matrix = Matrix.new
+  matrix.array_2d_print
   while winner == false
-    user1 = user_input(matrix.matrix)
+    user1 = user_input
     winner = modify_matrix(user1, matrix, choice[0])
     break if winner == true
 
-    user2 = user_input(matrix.matrix)
+    user2 = user_input
     winner = modify_matrix(user2, matrix, choice[1])
-    array_2d_print(matrix.matrix)
   end
 end
 
@@ -71,15 +80,6 @@ def modify_matrix(position, matrix, value)
   matrix.assign_value(position, value)
   flags = matrix.check_three_in_line
   flags.any?(true) ? true : false
-end
-
-def array_2d_print(array)
-  array.each do |arr|
-    arr.each do |item|
-      print "#{item} "
-    end
-    print "\n"
-  end
 end
 
 game(false, user_choice)
